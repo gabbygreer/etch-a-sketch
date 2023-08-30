@@ -8,14 +8,25 @@ const createGrid = (sizeOfGrid) => {
         row.classList.add('grid-row')
 
         for (let j = 0; j < sizeOfGrid; j++) {
+            const widthAndHeight = 500 / sizeOfGrid
             const gridBox = document.createElement('div')
             gridBox.classList.add('grid-box')
+            gridBox.style.width = `${widthAndHeight}px`
+            gridBox.style.height = `${widthAndHeight}px`
+            //mouseenter listener to change background color
+            gridBox.addEventListener('mouseenter', () => {
+                gridBox.style.backgroundColor = 'aqua'
+                gridBox.style.borderColor = 'transparent'
+            });
             row.appendChild(gridBox)
         }
 
         container.appendChild(row)
     }
 }
+createGrid(10);
 
-createGrid(16)
+
+
+
 
