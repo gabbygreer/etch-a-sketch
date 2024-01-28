@@ -1,32 +1,54 @@
-const container = document.querySelector('.container');
+const container = document.querySelector('#container');
+const gridSize = document.querySelector('.newGridBtn');
 
+createGrid(16)
 
-// creates rows and columns
-const createGrid = (sizeOfGrid) => {
-    for (let i = 0; i < sizeOfGrid; i++) {
-        const row = document.createElement('div')
-        row.classList.add('grid-row')
-
-        for (let j = 0; j < sizeOfGrid; j++) {
-            const widthAndHeight = 500 / sizeOfGrid
-            const gridBox = document.createElement('div')
-            gridBox.classList.add('grid-box')
-            gridBox.style.width = `${widthAndHeight}px`
-            gridBox.style.height = `${widthAndHeight}px`
-            //mouseenter listener to change background color
-            gridBox.addEventListener('mouseenter', () => {
-                gridBox.style.backgroundColor = 'aqua'
-                gridBox.style.borderColor = 'transparent'
-            });
-            row.appendChild(gridBox)
+//create grid
+function createGrid(gridSize) {
+    for (let i = 0; i < gridSize; i++) {
+        const row = document.createElement('div');
+        row.classList.add('row');
+        container.appendChild(row);
+        for(let j = 0; j < gridSize; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            row.appendChild(cell);
         }
-
-        container.appendChild(row)
+    }
+    //Adds event listener to every cell to change color
+    const colorCells = document.querySelectorAll('.cell');
+        colorCells.forEach(function(colorCells) {
+        colorCells.addEventListener('mouseover', () => {
+        colorCells.style.backgroundColor = randomColor();
+    });
+ })
+    //creates random color values
+    function randomColor() {
+        const redValue = Math.floor(Math.random() * 256);
+        const greenValue = Math.floor(Math.random() * 256);
+        const blueValue = Math.floor(Math.random() * 256);
+        const rgbValues = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+        return rgbValues;
     }
 }
-createGrid(10);
+createGrid(gridSize)
+
+const resizeButton = document.querySelector('.newGridBtn');
+resizeButton.addEventListener('click', () => {
+    let gridSize = Number(prompt('Enter a number between 4 and 100'));
+    if(gridSize < 1 || gridSize > 100) {
+        alert("Invalid grid size");
+    }else{
+        while(container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+        createGrid(gridSize);
+    }
+})
 
 
 
 
 
+
+    
